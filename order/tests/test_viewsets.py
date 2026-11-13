@@ -33,7 +33,7 @@ class OrderViewSetTest(APITestCase):
         response = self.client.get(reverse('order-list'))
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data['results']), 1)
 
     def test_retrieve_returns_order_with_products_and_total(self):
         url = reverse('order-detail', args=[self.order.id])
