@@ -23,7 +23,7 @@ class CategoryViewSetTest(APITestCase):
         response = self.client.get(reverse('category-list'))
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data['results']), 2)
 
     def test_retrieve_returns_one_category(self):
         url = reverse('category-detail', args=[self.category.id])
@@ -124,8 +124,8 @@ class ProductViewSetTest(APITestCase):
         response = self.client.get(reverse('product-list'))
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['title'], 'Django')
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['title'], 'Django')
 
     def test_retrieve_returns_product_with_category(self):
         url = reverse('product-detail', args=[self.product.id])
