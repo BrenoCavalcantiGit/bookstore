@@ -33,3 +33,14 @@ class OrderSerializer(serializers.ModelSerializer):
         order.product.set(products)
 
         return order
+
+    def update(self, instance, validated_data):
+        products = validated_data.pop('products_id', None)
+
+        instance.user = validated_data.get('user', instance.user)
+        instance.save()
+
+        if products is not None:
+            instance.product.set(products)
+
+        return instance
