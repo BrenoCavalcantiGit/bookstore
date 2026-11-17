@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework import status
+from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 
 from order.models import Order
@@ -14,6 +15,8 @@ class OrderViewSetTest(APITestCase):
         self.user = get_user_model().objects.create_user(
             username='breno', password='senha-segura-123'
         )
+        self.token = Token.objects.create(user=self.user)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Token {self.token.key}')
         self.category = Category.objects.create(title='Livros', slug='livros')
         self.product_1 = Product.objects.create(
             title='Django', price=Decimal('50.00')
